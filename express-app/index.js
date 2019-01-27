@@ -19,8 +19,9 @@ app.use('/images', express.static('images'));
 // call method that you want to run
 // get method take an actual path, arguments (req, res)
 // then run handler(code inside route)
+
 app.get('/', (req, res) => 
-    //get data
+    //get data  .json() send json to client
     res.json(data)
 
     // res.send(`a get request with / route on port ${PORT}`)
@@ -28,13 +29,29 @@ app.get('/', (req, res) =>
 app.post('/newItem', (req, res) => 
     res.send(`a post request with /newItem route on port ${PORT}`)
 );
+
+
 // put method to update data
 app.put('/item', (req, res) => 
-    res.send(`a put request with /item route on port ${PORT}`)
+res.send(`a put request with /item route on port ${PORT}`)
 );
 app.delete('/item', (req, res) => 
-    res.send(`a delete request with /item route on port ${PORT}`)
+res.send(`a delete request with /item route on port ${PORT}`)
 );
+
+//redirect
+app.get('/item', (req, res) =>
+    res.redirect('http://google.com')
+    // res.send(`a post request with /newItem route on port ${PORT}`)
+);
+
+app.get('/images', (req, res) =>
+    res.download('images/rocket.jpg')
+);
+
+
+
+
 
 // --------------------------------------------------------------------------------
 // pass parameters in a routing
@@ -62,8 +79,8 @@ app.get('/items/:id', (req, res, next) => {
     //res command send to client (see on browser)
     res.send(data[user]);
 
-    //call next() then jump to another function
-    //can only do one res method in a single call (get, put , post, etc)
+    //call next() then jump to another function (handler)
+    //can only do one respond method in a single call (get, put , post, etc)
     next();
 
 }, (req, res) => console.log('Did you get the right Data?')
