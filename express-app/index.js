@@ -13,6 +13,7 @@ app.use(express.static('public'));
 //this is for images folder on path /images
 app.use('/images', express.static('images'));
 
+// --------------------------------------------------------------------------------
 
 
 // call method that you want to run
@@ -34,6 +35,22 @@ app.put('/item', (req, res) =>
 app.delete('/item', (req, res) => 
     res.send(`a delete request with /item route on port ${PORT}`)
 );
+
+// --------------------------------------------------------------------------------
+// pass parameters in a routing
+
+app.get('/item/:id', (req, res) => {
+    console.log(req.params.id);
+    //convert id string to number store in user variable
+    let user = Number(req.params.id);
+    console.log(user);
+    console.log(data[user]);
+
+    //res command send to client (see in browser)
+    res.send(data[user]);
+});
+
+
 
 app.listen(PORT, () => {
     console.log(`Your server is running on port ${PORT}`)
