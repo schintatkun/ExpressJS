@@ -15,10 +15,10 @@ app.use('/images', express.static('images'));
 
 // --------------------------------------------------------------------------------
 
-
+// Routing
 // call method that you want to run
 // get method take an actual path, arguments (req, res)
-// then run handler
+// then run handler(code inside route)
 app.get('/', (req, res) => 
     //get data
     res.json(data)
@@ -51,10 +51,23 @@ app.get('/item/:id', (req, res) => {
     res.send(data[user]);
 });
 
+// NEXT is function that can handle multiple functions (callback) or handlers call
+app.get('/items/:id', (req, res, next) => {
+    console.log(req.params.id);
+    //convert id string to number store in user variable
+    let user = Number(req.params.id);
+    console.log(user);
+    console.log(data[user]);
 
+    //res command send to client (see on browser)
+    res.send(data[user]);
 
+    //call next() then jump to another function
+    //can only do one res method in a single call (get, put , post, etc)
+    next();
 
-
+}, (req, res) => console.log('Did you get the right Data?')
+);
 
 
 app.listen(PORT, () => {
