@@ -38,6 +38,7 @@ app.delete('/item', (req, res) =>
 
 // --------------------------------------------------------------------------------
 // pass parameters in a routing
+// also can pass multiple parameters ex ->  /item/:category/:id
 
 app.get('/item/:id', (req, res) => {
     console.log(req.params.id);
@@ -46,9 +47,13 @@ app.get('/item/:id', (req, res) => {
     console.log(user);
     console.log(data[user]);
 
-    //res command send to client (see in browser)
+    //res command send to client (see on browser)
     res.send(data[user]);
 });
+
+
+
+
 
 
 
