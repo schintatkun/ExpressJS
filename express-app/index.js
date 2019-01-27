@@ -86,6 +86,14 @@ app.get('/items/:id', (req, res, next) => {
 }, (req, res) => console.log('Did you get the right Data?')
 );
 
+// --------------------------------------------------------------------------------
+// Chaining route
+// --------------------------------------------------------------------------------
+
+app.route('/items')
+    .get((req, res) => res.send(`a get request with /items route on port ${PORT}`))
+    .put((req, res) => res.send(`a put request with /items route on port ${PORT}`))
+    .post((req, res) => res.send(`a post request with /items route on port ${PORT}`))
 
 app.listen(PORT, () => {
     console.log(`Your server is running on port ${PORT}`)
