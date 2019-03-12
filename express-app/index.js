@@ -1,8 +1,17 @@
 import express from 'express';
+// import favicon from 'serve-favicon';
+// import path from 'path';
+
 import data from './data/data.json';
 
 const app = express();
 const PORT = 3000;
+
+var _favicon = require('serve-favicon');
+var path = require('path');
+//favicon   nedd to import path and favicon
+app.use(_favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 
 //How to load static file in server
 //Express.static method that is exist in express API
@@ -12,6 +21,14 @@ app.use(express.static('public'));
 
 //this is for images folder on path /images
 app.use('/images', express.static('images'));
+
+
+//method to use JSON
+// app.use(express.json());
+
+//{extended: true} taking data that come from client and then stringify it ready for server
+app.use(express.urlencoded({extended: true}));
+
 
 // --------------------------------------------------------------------------------
 
@@ -26,9 +43,10 @@ app.get('/', (req, res) =>
 
     // res.send(`a get request with / route on port ${PORT}`)
 );
-app.post('/newItem', (req, res) => 
-    res.send(`a post request with /newItem route on port ${PORT}`)
-);
+app.post('/newItem', (req, res) => {
+    console.log(req.body);
+    res.send(`a post request with /newItem route on port ${PORT}`);
+});
 
 
 // put method to update data
@@ -90,13 +108,27 @@ app.get('/items/:id', (req, res, next) => {
 // Chaining route
 // --------------------------------------------------------------------------------
 
-app.route('/items')
+app.route('/items') 
+       
     .get((req, res) => res.send(`a get request with /items route on port ${PORT}`))
     .put((req, res) => res.send(`a put request with /items route on port ${PORT}`))
     .post((req, res) => res.send(`a post request with /items route on port ${PORT}`))
 
+// --------------------------------------------------------------------------------
+// Middlewares are functions that happen before sending res back to client.
+
+
+//error-handling middleware
+// app.use((err, req,res, next)=> {
+
+// });
+
+
+
+
+
 app.listen(PORT, () => {
     console.log(`Your server is running on port ${PORT}`)
-    console.log(data);
+    // console.log(data);
 });
 
